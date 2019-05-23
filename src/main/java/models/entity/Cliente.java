@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,22 +27,27 @@ public class Cliente implements Serializable{
 	private Long id;
 
 	@NotNull
+	@Column(name="name")
 	private String name;
 
 	@NotNull
+	@Column(name="phone_number")
 	private String phoneNumber;
 
 	@NotNull
+	@Column(name="doc_id")
 	private String docId;
 	
 	@NotNull
+	@Column(name="doc_id_type")
 	private String docIdType;
 	
 	@NotNull
+	@Column(name="email")
 	@Email
 	private String email;
 
-	@OneToMany(mappedBy="cliente"
+	/*@OneToMany(mappedBy="cliente"
 			,fetch=FetchType.LAZY,
 			cascade=CascadeType.ALL)
 	private List<MetaAhorro> metasAhorro;
@@ -53,11 +59,11 @@ public class Cliente implements Serializable{
 	private List<Recompensa> recompensas;
 	
 	@OneToMany(mappedBy="cliente",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private List<Transaccion> transacciones;
+	private List<Transaccion> transacciones;*/
 	
 	public Cliente() {
-		metasAhorro = new ArrayList<>();
-		categoriasPersonalizadas = new ArrayList<>();
+		/*metasAhorro = new ArrayList<>();
+		categoriasPersonalizadas = new ArrayList<>();*/
 
 	}
 	public Long getId() {
@@ -78,12 +84,7 @@ public class Cliente implements Serializable{
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public List<MetaAhorro> getMetasAhorro() {
-		return metasAhorro;
-	}
-	public void setMetasAhorro(List<MetaAhorro> savingsGoal) {
-		this.metasAhorro = savingsGoal;
-	}
+	
 	public String getDocId() {
 		return docId;
 	}
@@ -101,6 +102,12 @@ public class Cliente implements Serializable{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	/*public List<MetaAhorro> getMetasAhorro() {
+		return metasAhorro;
+	}
+	public void setMetasAhorro(List<MetaAhorro> savingsGoal) {
+		this.metasAhorro = savingsGoal;
 	}
 	public void addMetaAhorro(MetaAhorro metaAhorro)
 	{
@@ -133,5 +140,5 @@ public class Cliente implements Serializable{
 	}
 	public void addTransaccion(Transaccion transaccion) {
 		this.transacciones.add(transaccion);
-	}
+	}*/
 }

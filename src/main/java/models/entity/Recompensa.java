@@ -3,6 +3,7 @@ package models.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,8 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 @Entity
@@ -27,20 +31,37 @@ public class Recompensa implements Serializable{
 	private Long id;
 	
 	@NotNull
+	@Column(name="coupon_code")
 	private String couponCode;
+	
 	@NotNull
+	@Column(name="expiration_date")
 	private Date expirationDate;
+	
 	@NotNull
-	private String companyname;
+	@Column(name="company_name")
+	private String companyName;
+	
 	@Nullable
+	@Column(name="emition_date")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date emitionDate;
+	
 	@Nullable
+	@Column(name="activation_date")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date activationDate;
+	
 	@NotNull
+	@Column(name="used")
 	private boolean used;
+	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
+	
 	public Long getId() {
 		return id;
 	}
@@ -59,11 +80,11 @@ public class Recompensa implements Serializable{
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
 	}
-	public String getCompanyname() {
-		return companyname;
+	public String getCompanyName() {
+		return companyName;
 	}
-	public void setCompanyname(String companyname) {
-		this.companyname = companyname;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 	public Date getEmitionDate() {
 		return emitionDate;

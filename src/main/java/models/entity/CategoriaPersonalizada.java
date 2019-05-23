@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,16 +26,22 @@ public class CategoriaPersonalizada implements Serializable{
 	private Long id;
 
 	@NotNull
+	@Column(name="name")
 	private String name;
+	
 	@NotNull
+	@Column(name="description")
 	private String description;
+	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
-	@OneToMany(mappedBy="categoriaPersonalizada"
+	
+	/*@OneToMany(mappedBy="categoriaPersonalizada"
 			,fetch=FetchType.LAZY,
 			cascade=CascadeType.ALL)
-	private List<Transaccion> transacciones;
+	private List<Transaccion> transacciones;*/
+	
 	public Long getId() {
 		return id;
 	}
@@ -59,7 +66,7 @@ public class CategoriaPersonalizada implements Serializable{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public List<Transaccion> getTransaccion() {
+	/*public List<Transaccion> getTransaccion() {
 		return transacciones;
 	}
 	public void setTransaccion(List<Transaccion> transacciones) {
@@ -68,5 +75,5 @@ public class CategoriaPersonalizada implements Serializable{
 	
 	public void addTransaccion(Transaccion transaccion) {
 		this.transacciones.add(transaccion);
-	}
+	}*/
 }

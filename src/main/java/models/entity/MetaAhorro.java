@@ -4,6 +4,7 @@ package models.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="metaAhorro")
@@ -24,15 +29,23 @@ public class MetaAhorro implements Serializable{
 	private Long id;
 
 	@NotNull
+	@Column(name="amount")
 	private double amount;
 
 	@NotNull
+	@Column(name="start_date")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date startDate;
 
 	@NotNull
+	@Column(name="expiration_date")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date expirationDate;
 	
 	@NotNull
+	@Column(name="description")
 	private String description;
 	
 	@ManyToOne

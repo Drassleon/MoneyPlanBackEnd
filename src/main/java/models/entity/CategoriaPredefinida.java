@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,14 +24,17 @@ public class CategoriaPredefinida implements Serializable{
 	private Long id;
 
 	@NotNull
+	@Column(name="name")
 	private String name;
+	
 	@NotNull
+	@Column(name="description")
 	private String description;
 	
-	@OneToMany(mappedBy="categoriaPredefinida"
+	/*@OneToMany(mappedBy="categoriaPredefinida"
 			,fetch=FetchType.LAZY,
 			cascade=CascadeType.ALL)
-	private List<Transaccion> transaccion;
+	private List<Transaccion> transaccion;*/
 
 	public Long getId() {
 		return id;
@@ -56,7 +60,7 @@ public class CategoriaPredefinida implements Serializable{
 		this.description = description;
 	}
 
-	public List<Transaccion> getTransaccion() {
+	/*public List<Transaccion> getTransaccion() {
 		return transaccion;
 	}
 
@@ -67,5 +71,5 @@ public class CategoriaPredefinida implements Serializable{
 	public void addTransaccion(Transaccion transaccion)
 	{
 		this.transaccion.add(transaccion);
-	}
+	}*/
 }

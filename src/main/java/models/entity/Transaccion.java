@@ -3,6 +3,7 @@ package models.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 @Entity
@@ -24,27 +28,32 @@ public class Transaccion implements Serializable{
 	private Long id;
 
 	@NotNull
+	@Column(name="transaction_type")
 	private int transactionType;
 
 	@NotNull
+	@Column(name="amount")
 	private double amount;
 
 	@NotNull
+	@Column(name="start_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Timestamp timestamp;
 	
 	@NotNull
+	@Column(name="description")
 	private String description;
 	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name="cliente_id")
 	private Cliente cliente;	
 	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name="categoria_personalizada")
 	@Nullable
 	private CategoriaPersonalizada categoriaPersonalizada;	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name="categoria_predefinida")
 	@Nullable
 	private CategoriaPredefinida categoriaPredefinida;
 	public Long getId() {
