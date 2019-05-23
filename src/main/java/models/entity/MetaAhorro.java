@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -37,7 +36,7 @@ public class MetaAhorro implements Serializable{
 	private String description;
 	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	public MetaAhorro() {
 		
