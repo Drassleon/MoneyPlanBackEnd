@@ -1,23 +1,23 @@
-
 package models.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="metaAhorro")
-public class MetaAhorro implements Serializable{
-
+@Table(name="categoriaPersonalizada")
+public class CategoriaPersonalizada implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -25,46 +25,27 @@ public class MetaAhorro implements Serializable{
 	private Long id;
 
 	@NotNull
-	private double amount;
-
-	@NotNull
-	private Date startDate;
-
-	@NotNull
-	private Date expirationDate;
-	
+	private String name;
 	@NotNull
 	private String description;
-	
 	@ManyToOne
 	@JoinColumn
 	private Cliente cliente;
-	public MetaAhorro() {
-		
-	}
+	@OneToMany(mappedBy="categoriaPersonalizada"
+			,fetch=FetchType.LAZY,
+			cascade=CascadeType.ALL)
+	private List<Transaccion> transacciones;
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public double getAmount() {
-		return amount;
+	public String getName() {
+		return name;
 	}
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-	public Date getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getDescription() {
 		return description;
@@ -78,5 +59,14 @@ public class MetaAhorro implements Serializable{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	public List<Transaccion> getTransaccion() {
+		return transacciones;
+	}
+	public void setTransaccion(List<Transaccion> transacciones) {
+		this.transacciones = transacciones;
+	}
 	
+	public void addTransaccion(Transaccion transaccion) {
+		this.transacciones.add(transaccion);
+	}
 }

@@ -1,0 +1,17 @@
+#DataBase Configuration YML File
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update 
+  #estrategia de generacion de base de datos
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/db_MoneyPlan 
+    username: postgres
+    password: admin
+    
+    
+server:
+  port: 8070 

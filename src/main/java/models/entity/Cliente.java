@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-
+@Entity
+@Table(name="cliente")
 public class Cliente implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -23,10 +26,10 @@ public class Cliente implements Serializable{
 	private Long id;
 
 	@NotNull
-	private String nombre;
+	private String name;
 
 	@NotNull
-	private String telefono;
+	private String phoneNumber;
 
 	@NotNull
 	private String docId;
@@ -41,9 +44,21 @@ public class Cliente implements Serializable{
 	@OneToMany(mappedBy="cliente"
 			,fetch=FetchType.LAZY,
 			cascade=CascadeType.ALL)
-	private List<MetaAhorro> metas;
+	private List<MetaAhorro> metasAhorro;
+	
+	@OneToMany(mappedBy="cliente",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<CategoriaPersonalizada> categoriasPersonalizadas;
+	
+	@OneToMany(mappedBy="cliente",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<Recompensa> recompensas;
+	
+	@OneToMany(mappedBy="cliente",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<Transaccion> transacciones;
+	
 	public Cliente() {
-		metas = new ArrayList<>();
+		metasAhorro = new ArrayList<>();
+		categoriasPersonalizadas = new ArrayList<>();
+
 	}
 	public Long getId() {
 		return id;
@@ -51,17 +66,23 @@ public class Cliente implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getTelefono() {
-		return telefono;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public List<MetaAhorro> getMetasAhorro() {
+		return metasAhorro;
+	}
+	public void setMetasAhorro(List<MetaAhorro> savingsGoal) {
+		this.metasAhorro = savingsGoal;
 	}
 	public String getDocId() {
 		return docId;
@@ -81,11 +102,36 @@ public class Cliente implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public List<MetaAhorro> getMetas() {
-		return metas;
+	public void addMetaAhorro(MetaAhorro metaAhorro)
+	{
+		this.metasAhorro.add(metaAhorro);
 	}
-	public void setMetas(List<MetaAhorro> metas) {
-		this.metas = metas;
+	public List<CategoriaPersonalizada> getCategoriasPersonalizadas() {
+		return categoriasPersonalizadas;
 	}
-	
+	public void setCategoriasPersonalizadas(List<CategoriaPersonalizada> categoriasPersonalizadas) {
+		this.categoriasPersonalizadas = categoriasPersonalizadas;
+	}
+	public void addCategoriaPersonalizada(CategoriaPersonalizada categoriaPersonalizada)
+	{
+		this.categoriasPersonalizadas.add(categoriaPersonalizada);
+	}
+	public List<Recompensa> getRecompensas() {
+		return recompensas;
+	}
+	public void setRecompensas(List<Recompensa> recompensas) {
+		this.recompensas = recompensas;
+	}
+	public void addRecompensa(Recompensa recompensa) {
+		this.recompensas.add(recompensa);
+	}
+	public List<Transaccion> getTransacciones() {
+		return transacciones;
+	}
+	public void setTransacciones(List<Transaccion> transacciones) {
+		this.transacciones = transacciones;
+	}
+	public void addTransaccion(Transaccion transaccion) {
+		this.transacciones.add(transaccion);
+	}
 }
