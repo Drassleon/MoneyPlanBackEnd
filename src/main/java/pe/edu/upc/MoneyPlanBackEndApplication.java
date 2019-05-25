@@ -1,4 +1,4 @@
-package edu.pe.upc;
+package pe.edu.upc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

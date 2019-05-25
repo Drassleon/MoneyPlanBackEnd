@@ -1,4 +1,4 @@
-package edu.pe.upc;
+package pe.edu.upc;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
