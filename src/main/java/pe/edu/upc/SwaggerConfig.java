@@ -22,7 +22,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     @Bean
 	public Docket productApi() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("edu.pe.upc.controllers"))
+				.apis(RequestHandlerSelectors.basePackage("pe.edu.upc.moneyplan.controller"))
 				.paths(regex("/api.*")).build().apiInfo(metaData());
 	}
 	private ApiInfo metaData() {
