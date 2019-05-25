@@ -1,5 +1,5 @@
 
-package models.entity;
+package pe.edu.upc.moneyplan.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;

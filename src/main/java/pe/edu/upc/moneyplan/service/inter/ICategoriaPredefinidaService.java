@@ -1,6 +1,6 @@
-package service.inter;
+package pe.edu.upc.moneyplan.service.inter;
 
-import models.entity.CategoriaPredefinida;
+import pe.edu.upc.moneyplan.models.entity.CategoriaPredefinida;
 
 public interface ICategoriaPredefinidaService extends IService<CategoriaPredefinida>{
 

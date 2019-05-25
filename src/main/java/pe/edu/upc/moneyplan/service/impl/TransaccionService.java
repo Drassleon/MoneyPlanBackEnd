@@ -1,13 +1,13 @@
-package service.impl;
+package pe.edu.upc.moneyplan.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import models.dao.ITransaccionDAO;
-import models.entity.Transaccion;
-import service.inter.ITransaccionService;
+import pe.edu.upc.moneyplan.models.dao.ITransaccionDAO;
+import pe.edu.upc.moneyplan.models.entity.Transaccion;
+import pe.edu.upc.moneyplan.service.inter.ITransaccionService;
 @Service
 public class TransaccionService implements ITransaccionService {
 	

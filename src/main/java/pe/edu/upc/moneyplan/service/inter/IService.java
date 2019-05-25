@@ -1,4 +1,4 @@
-package service.inter;
+package pe.edu.upc.moneyplan.service.inter;
 
 import java.util.List;
 

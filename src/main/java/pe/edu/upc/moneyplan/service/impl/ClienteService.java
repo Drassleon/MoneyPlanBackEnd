@@ -1,13 +1,13 @@
-package service.impl;
+package pe.edu.upc.moneyplan.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import models.dao.IClienteDAO;
-import models.entity.Cliente;
-import service.inter.IClienteService;
+import pe.edu.upc.moneyplan.models.dao.IClienteDAO;
+import pe.edu.upc.moneyplan.models.entity.Cliente;
+import pe.edu.upc.moneyplan.service.inter.IClienteService;
 @Service
 public class ClienteService implements IClienteService {
 

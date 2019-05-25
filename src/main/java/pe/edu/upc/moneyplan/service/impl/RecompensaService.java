@@ -1,13 +1,13 @@
-package service.impl;
+package pe.edu.upc.moneyplan.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import models.dao.IRecompensaDAO;
-import models.entity.Recompensa;
-import service.inter.IRecompensaService;
+import pe.edu.upc.moneyplan.models.dao.IRecompensaDAO;
+import pe.edu.upc.moneyplan.models.entity.Recompensa;
+import pe.edu.upc.moneyplan.service.inter.IRecompensaService;
 @Service
 public class RecompensaService implements IRecompensaService {
 @Autowired

@@ -1,6 +1,6 @@
-package service.inter;
+package pe.edu.upc.moneyplan.service.inter;
 
-import models.entity.Recompensa;
+import pe.edu.upc.moneyplan.models.entity.Recompensa;
 
 public interface IRecompensaService extends IService<Recompensa>{
 

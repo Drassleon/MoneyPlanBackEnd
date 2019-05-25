@@ -1,7 +1,8 @@
-package models.entity;
+package pe.edu.upc.moneyplan.models.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class Transaccion implements Serializable{
 	@NotNull
 	@Column(name="start_date")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp timestamp;
+	private Date timestamp;
 	
 	@NotNull
 	@Column(name="description")
@@ -74,10 +75,10 @@ public class Transaccion implements Serializable{
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	public Timestamp getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
-	public void setTimestamp(Timestamp timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 	public String getDescription() {

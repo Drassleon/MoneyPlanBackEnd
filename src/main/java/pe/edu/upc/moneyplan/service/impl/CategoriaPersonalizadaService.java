@@ -1,13 +1,13 @@
-package service.impl;
+package pe.edu.upc.moneyplan.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import models.dao.ICategoriaPersonalizadaDAO;
-import models.entity.CategoriaPersonalizada;
-import service.inter.ICategoriaPersonalizadaService;
+import pe.edu.upc.moneyplan.models.dao.ICategoriaPersonalizadaDAO;
+import pe.edu.upc.moneyplan.models.entity.CategoriaPersonalizada;
+import pe.edu.upc.moneyplan.service.inter.ICategoriaPersonalizadaService;
 @Service
 public class CategoriaPersonalizadaService implements ICategoriaPersonalizadaService {
 	@Autowired

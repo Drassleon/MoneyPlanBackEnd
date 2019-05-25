@@ -1,4 +1,4 @@
-package controller;
+package pe.edu.upc.moneyplan.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import models.entity.Cliente;
-import service.impl.ClienteService;
-import service.inter.IClienteService;
+import pe.edu.upc.moneyplan.models.entity.Cliente;
+import pe.edu.upc.moneyplan.service.impl.ClienteService;
+import pe.edu.upc.moneyplan.service.inter.IClienteService;
 
 @RestController
 @RequestMapping("/api/cliente")

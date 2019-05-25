@@ -1,4 +1,4 @@
-package controller;
+package pe.edu.upc.moneyplan.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import models.entity.MetaAhorro;
-import service.impl.MetaAhorroService;
-import service.inter.IMetaAhorroService;
+import pe.edu.upc.moneyplan.models.entity.MetaAhorro;
+import pe.edu.upc.moneyplan.service.impl.MetaAhorroService;
+import pe.edu.upc.moneyplan.service.inter.IMetaAhorroService;
 @RestController
 @RequestMapping("api/metaAhorro")
 public class MetaAhorroControllerApi {

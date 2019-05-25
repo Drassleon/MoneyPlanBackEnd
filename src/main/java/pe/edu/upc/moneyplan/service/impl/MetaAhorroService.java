@@ -1,13 +1,13 @@
-package service.impl;
+package pe.edu.upc.moneyplan.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import models.dao.IMetaAhorroDAO;
-import models.entity.MetaAhorro;
-import service.inter.IMetaAhorroService;
+import pe.edu.upc.moneyplan.models.dao.IMetaAhorroDAO;
+import pe.edu.upc.moneyplan.models.entity.MetaAhorro;
+import pe.edu.upc.moneyplan.service.inter.IMetaAhorroService;
 @Service
 public class MetaAhorroService implements IMetaAhorroService {
 	@Autowired
