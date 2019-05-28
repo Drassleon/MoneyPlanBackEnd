@@ -47,7 +47,7 @@ public class Cliente implements Serializable{
 	@Email
 	private String email;
 
-	/*@OneToMany(mappedBy="cliente"
+	@OneToMany(mappedBy="cliente"
 			,fetch=FetchType.LAZY,
 			cascade=CascadeType.ALL)
 	private List<MetaAhorro> metasAhorro;
@@ -59,11 +59,12 @@ public class Cliente implements Serializable{
 	private List<Recompensa> recompensas;
 	
 	@OneToMany(mappedBy="cliente",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private List<Transaccion> transacciones;*/
+	private List<Transaccion> transacciones;
 	
 	public Cliente() {
-		/*metasAhorro = new ArrayList<>();
-		categoriasPersonalizadas = new ArrayList<>();*/
+		metasAhorro = new ArrayList<>();
+		categoriasPersonalizadas = new ArrayList<>();
+		recompensas = new  ArrayList<>();
 
 	}
 	public Long getId() {
@@ -103,7 +104,7 @@ public class Cliente implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	/*public List<MetaAhorro> getMetasAhorro() {
+	public List<MetaAhorro> getMetasAhorro() {
 		return metasAhorro;
 	}
 	public void setMetasAhorro(List<MetaAhorro> savingsGoal) {
@@ -140,5 +141,5 @@ public class Cliente implements Serializable{
 	}
 	public void addTransaccion(Transaccion transaccion) {
 		this.transacciones.add(transaccion);
-	}*/
+	}
 }

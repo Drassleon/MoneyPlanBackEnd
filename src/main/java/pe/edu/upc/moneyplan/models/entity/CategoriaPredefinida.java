@@ -1,6 +1,7 @@
 package pe.edu.upc.moneyplan.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,11 +32,14 @@ public class CategoriaPredefinida implements Serializable{
 	@Column(name="description")
 	private String description;
 	
-	/*@OneToMany(mappedBy="categoriaPredefinida"
+	@OneToMany(mappedBy="categoriaPredefinida"
 			,fetch=FetchType.LAZY,
 			cascade=CascadeType.ALL)
-	private List<Transaccion> transaccion;*/
+	private List<Transaccion> transacciones;
 
+	public CategoriaPredefinida() {
+		transacciones = new ArrayList<>();
+	}
 	public Long getId() {
 		return id;
 	}
@@ -60,16 +64,16 @@ public class CategoriaPredefinida implements Serializable{
 		this.description = description;
 	}
 
-	/*public List<Transaccion> getTransaccion() {
-		return transaccion;
+	public List<Transaccion> getTransacciones() {
+		return transacciones;
 	}
 
-	public void setTransaccion(List<Transaccion> transaccion) {
-		this.transaccion = transaccion;
+	public void setTransacciones(List<Transaccion> transacciones) {
+		this.transacciones = transacciones;
 	}
 	
 	public void addTransaccion(Transaccion transaccion)
 	{
-		this.transaccion.add(transaccion);
-	}*/
+		this.transacciones.add(transaccion);
+	}
 }

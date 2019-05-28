@@ -1,6 +1,7 @@
 package pe.edu.upc.moneyplan.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,11 +38,13 @@ public class CategoriaPersonalizada implements Serializable{
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	
-	/*@OneToMany(mappedBy="categoriaPersonalizada"
+	@OneToMany(mappedBy="categoriaPersonalizada"
 			,fetch=FetchType.LAZY,
 			cascade=CascadeType.ALL)
-	private List<Transaccion> transacciones;*/
-	
+	private List<Transaccion> transacciones;
+	public CategoriaPersonalizada() {
+		transacciones = new ArrayList<>();
+	}
 	public Long getId() {
 		return id;
 	}
@@ -66,7 +69,7 @@ public class CategoriaPersonalizada implements Serializable{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	/*public List<Transaccion> getTransaccion() {
+	public List<Transaccion> getTransaccion() {
 		return transacciones;
 	}
 	public void setTransaccion(List<Transaccion> transacciones) {
@@ -75,5 +78,5 @@ public class CategoriaPersonalizada implements Serializable{
 	
 	public void addTransaccion(Transaccion transaccion) {
 		this.transacciones.add(transaccion);
-	}*/
+	}
 }
