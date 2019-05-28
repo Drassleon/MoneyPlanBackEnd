@@ -25,39 +25,39 @@ import pe.edu.upc.moneyplan.service.inter.IClienteService;
 @RequestMapping("/api/cliente")
 public class ClienteControllerApi {
 	@Autowired
-	IClienteService clienteService=new ClienteService();
-	
+	IClienteService clienteService = new ClienteService();
 
-	@RequestMapping(value="/",method = RequestMethod.GET)
-	   @ResponseBody
-	   public List<Cliente> findAll() {
-	       List<Cliente> clientes= clienteService.findAll();
-	    
-	       return clientes;
-	   }
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Cliente> findAll() {
+		List<Cliente> clientes = clienteService.findAll();
+
+		return clientes;
+	}
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	   @ResponseBody
-	   public Cliente findOne(@PathVariable("id") Long id) {
-	       return clienteService.findById( id );
-	   }
+	@ResponseBody
+	public Cliente findOne(@PathVariable("id") Long id) {
+		return clienteService.findById(id);
+	}
+
 	@PostMapping("/")
 	public ResponseEntity<Object> create(@RequestBody Cliente cliente) {
-		
+
 		clienteService.save(cliente);
-		
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(cliente.getId()).toUri();
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId())
+				.toUri();
 
 		return ResponseEntity.created(location).build();
 
 	}
-	 
+
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> update(@RequestBody Cliente cliente, @PathVariable long id) {
 
-		Cliente clienteAux=clienteService.findById(id);
-		if(clienteAux!=null)
-		{
+		Cliente clienteAux = clienteService.findById(id);
+		if (clienteAux != null) {
 			cliente.setId(id);
 			clienteService.save(cliente);
 			return ResponseEntity.noContent().build();
@@ -71,6 +71,6 @@ public class ClienteControllerApi {
 	@ResponseStatus(HttpStatus.OK)
 	public void delete(@PathVariable("id") Long id) {
 		clienteService.deleteById(id);
-	   }
+	}
 
 }

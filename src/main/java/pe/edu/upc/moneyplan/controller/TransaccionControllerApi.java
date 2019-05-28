@@ -40,6 +40,17 @@ public class TransaccionControllerApi {
 	   public Transaccion findOne(@PathVariable("id") Long id) {
 	       return transaccionService.findById( id );
 	   }
+	@RequestMapping(value = "/resumen/gasto/promedio/{clienteId}/{mes}")
+	@ResponseBody
+	public double ExpenseAverage(@PathVariable("clienteId") Long clientId,@PathVariable("mes") int month) {
+		double promedioGasto = 0.00f;
+		List<Transaccion> gastos = transaccionService.findByClientId(clientId);
+		for (Transaccion gasto: gastos) {
+			if(gasto.getTransactionType()==1)
+			promedioGasto+=gasto.getAmount();
+		}
+		return promedioGasto/gastos.size();
+	}
 	@PostMapping("/")
 	public ResponseEntity<Object> create(@RequestBody Transaccion transaccion) {
 		

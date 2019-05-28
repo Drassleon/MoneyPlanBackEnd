@@ -1,5 +1,6 @@
 package pe.edu.upc.moneyplan.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,18 @@ public class TransaccionService implements ITransaccionService {
 	@Override
 	public void deleteById(Long id) {
 		transaccionRepo.deleteById(id);
+	}
+
+	@Override
+	public List<Transaccion> findByClientId(Long id) {
+		// TODO Auto-generated method stub
+		List<Transaccion> transacciones = new ArrayList<>();
+		try {
+			transacciones=transaccionRepo.findByClientId(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return transacciones;
 	}
 
 }
