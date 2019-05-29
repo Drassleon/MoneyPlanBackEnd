@@ -33,7 +33,7 @@ public class CategoriaPredefinida implements Serializable{
 	private String description;
 	
 	@OneToMany(mappedBy="categoriaPredefinida"
-			,fetch=FetchType.LAZY,
+			,fetch=FetchType.EAGER,
 			cascade=CascadeType.ALL)
 	private List<Transaccion> transacciones;
 
