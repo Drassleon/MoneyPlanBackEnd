@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +23,7 @@ import pe.edu.upc.moneyplan.service.impl.RecompensaService;
 import pe.edu.upc.moneyplan.service.inter.IRecompensaService;
 @RestController
 @RequestMapping("api/recompensa")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class RecompensaControllerApi {
 	@Autowired
 	IRecompensaService recompensaService=new RecompensaService();
