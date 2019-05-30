@@ -32,13 +32,13 @@ public class CategoriaPredefinida implements Serializable{
 	@Column(name="description")
 	private String description;
 	
-	@OneToMany(mappedBy="categoriaPredefinida"
+	/*@OneToMany(mappedBy="categoriaPredefinida"
 			,fetch=FetchType.EAGER,
 			cascade=CascadeType.ALL)
-	private List<Transaccion> transacciones;
+	private List<Transaccion> transacciones;*/
 
 	public CategoriaPredefinida() {
-		transacciones = new ArrayList<>();
+		//transacciones = new ArrayList<>();
 	}
 	public Long getId() {
 		return id;
@@ -64,7 +64,7 @@ public class CategoriaPredefinida implements Serializable{
 		this.description = description;
 	}
 
-	public List<Transaccion> getTransacciones() {
+	/*public List<Transaccion> getTransacciones() {
 		return transacciones;
 	}
 
@@ -75,5 +75,5 @@ public class CategoriaPredefinida implements Serializable{
 	public void addTransaccion(Transaccion transaccion)
 	{
 		this.transacciones.add(transaccion);
-	}
+	}*/
 }
