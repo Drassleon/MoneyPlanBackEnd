@@ -42,6 +42,13 @@ public class TransaccionControllerApi {
 	   public Transaccion findOne(@PathVariable("id") Long id) {
 	       return transaccionService.findById( id );
 	   }
+	
+	@RequestMapping(value = "/cliente/{clienteId}", method = RequestMethod.GET)
+	   @ResponseBody
+	   public List<Transaccion> findByClientId(@PathVariable("clienteId") Long clienteId) {
+	       return transaccionService.findByClientId(clienteId);
+	   }
+	
 	@RequestMapping(value = "/resumen/gasto/promedio/{clienteId}/{mes}")
 	@ResponseBody
 	public double ExpenseAverage(@PathVariable("clienteId") Long clientId,@PathVariable("mes") int month) {

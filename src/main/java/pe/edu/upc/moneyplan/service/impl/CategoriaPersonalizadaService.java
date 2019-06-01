@@ -33,4 +33,10 @@ public class CategoriaPersonalizadaService implements ICategoriaPersonalizadaSer
 		categoriaPersonalizadaRepo.deleteById(id);
 	}
 
+	@Override
+	public List<CategoriaPersonalizada> findByClientId(Long id) {
+		// TODO Auto-generated method stub
+		return categoriaPersonalizadaRepo.findByClientId(id);
+	}
+
 }

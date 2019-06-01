@@ -42,6 +42,13 @@ public class CategoriaPersonalizadaControllerApi {
 	   public CategoriaPersonalizada findOne(@PathVariable("id") Long id) {
 	       return categoriaPersonalizadaService.findById( id );
 	   }
+	
+	@RequestMapping(value = "/cliente/{clienteId}", method = RequestMethod.GET)
+	   @ResponseBody
+	   public List<CategoriaPersonalizada> findByClientId(@PathVariable("clienteId") Long clienteId) {
+	       return categoriaPersonalizadaService.findByClientId(clienteId);
+	   }
+	
 	@PostMapping("/")
 	public ResponseEntity<Object> create(@RequestBody CategoriaPersonalizada categoriaPersonalizada) {
 		
