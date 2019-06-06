@@ -12,4 +12,6 @@ import pe.edu.upc.moneyplan.models.entity.CustomCategory;
 public interface ICustomCategoryDAO extends JpaRepository<CustomCategory, Long> {
 	@Query(value = "SELECT * FROM custom_category c WHERE c.client_id=?1", nativeQuery = true)
 	List<CustomCategory> findByClientId(Long id);
+	@Query(value="SELECT * FROM custom_category c WHERE c.name=?1 AND c.client_id=?2",nativeQuery=true)
+	CustomCategory findByName(String name,Long id);
 }

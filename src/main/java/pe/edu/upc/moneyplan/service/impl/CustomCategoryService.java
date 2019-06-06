@@ -41,4 +41,19 @@ public class CustomCategoryService implements ICustomCategoryService {
 		return customCategoryRepo.findByClientId(id);
 	}
 
+	@Override
+	public CustomCategory findByName(String name,Long id) {
+		// TODO Auto-generated method stub
+		return customCategoryRepo.findByName(name,id);
+	}
+
+	@Override
+	public Boolean isDuplicate(String name, Long id) {
+		// TODO Auto-generated method stub
+		if(customCategoryRepo.findByName(name, id)!=null)
+		return true;
+		else 
+			return false;
+	}
+
 }

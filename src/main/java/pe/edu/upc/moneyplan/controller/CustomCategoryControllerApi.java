@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import pe.edu.upc.moneyplan.models.entity.CustomCategory;
@@ -49,10 +51,23 @@ public class CustomCategoryControllerApi {
 	public List<CustomCategory> findByClientId(@PathVariable("clientId") Long clientId) {
 		return customCategoryService.findByClientId(clientId);
 	}
-
+	@RequestMapping(value="/client/{clientId}/search/{categoryName}",method=RequestMethod.GET)
+	@ResponseBody
+	public CustomCategory findByName(@PathVariable("clientId") Long clientId,@PathVariable("categoryName")String categoryName) {
+		CustomCategory customCategoryFound = customCategoryService.findByName(categoryName, clientId);
+		if(customCategoryFound==null)
+		{
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found!");
+		}
+		return customCategoryFound;
+	}
 	@PostMapping("/")
 	public ResponseEntity<Object> create(@RequestBody CustomCategory customCategory) {
 
+		if(customCategoryService.isDuplicate(customCategory.getName(), customCategory.getClient().getId()))
+		{
+			throw new HttpClientErrorException(HttpStatus.CONFLICT,"Category already exists!");
+		}
 		customCategoryService.save(customCategory);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
