@@ -10,6 +10,6 @@ import pe.edu.upc.moneyplan.models.entity.Transaction;
 
 @Repository
 public interface ITransactionDAO extends JpaRepository<Transaction, Long> {
-	@Query(value = "SELECT * FROM Transaction t WHERE t.Client_Id=?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM transaction t WHERE t.client_id=?1", nativeQuery = true)
 	List<Transaction> findByClientId(Long id);
 }

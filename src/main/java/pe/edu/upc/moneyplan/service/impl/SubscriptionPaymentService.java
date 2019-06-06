@@ -3,11 +3,12 @@ package pe.edu.upc.moneyplan.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import pe.edu.upc.moneyplan.models.dao.ISubscriptionPaymentDAO;
 import pe.edu.upc.moneyplan.models.entity.SubscriptionPayment;
 import pe.edu.upc.moneyplan.service.inter.ISubscriptionPaymentService;
-
+@Service
 public class SubscriptionPaymentService implements ISubscriptionPaymentService {
 
 	@Autowired

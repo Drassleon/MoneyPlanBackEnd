@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import pe.edu.upc.moneyplan.models.entity.CustomCategory;
 import pe.edu.upc.moneyplan.models.entity.SavingGoal;
 import pe.edu.upc.moneyplan.service.impl.SavingGoalService;
 import pe.edu.upc.moneyplan.service.inter.ISavingGoalService;

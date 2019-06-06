@@ -8,6 +8,6 @@ import pe.edu.upc.moneyplan.models.entity.Client;
 
 @Repository
 public interface IClientDAO extends JpaRepository<Client, Long> {
-	@Query(value = "SELECT * FROM Client c WHERE c.Email=?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM client c WHERE c.email=?1", nativeQuery = true)
 	Client findByEmail(String email);
 }

@@ -19,38 +19,38 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "SavingGoal")
+@Table(name = "saving_goal")
 public class SavingGoal implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Id")
+	@Column(name = "id")
 	private Long id;
 
 	@NotNull
-	@Column(name = "Amount")
+	@Column(name = "amount")
 	private double amount;
 
 	@NotNull
-	@Column(name = "StartDate")
+	@Column(name = "start_date")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date startDate;
 
 	@NotNull
-	@Column(name = "ExpirationDate")
+	@Column(name = "expiration_date")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date expirationDate;
 
 	@NotNull
-	@Column(name = "Description")
+	@Column(name = "description")
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "Client_Id")
+	@JoinColumn(name = "client_id")
 	private Client client;
 
 	public SavingGoal() {

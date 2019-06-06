@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,46 +19,46 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 @Entity
-@Table(name = "Reward")
+@Table(name = "reward")
 public class Reward implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Id")
+	@Column(name = "id")
 	private Long id;
 
 	@NotNull
-	@Column(name = "CouponCode")
+	@Column(name = "coupon_code")
 	private String couponCode;
 
 	@NotNull
-	@Column(name = "ExpirationDate")
+	@Column(name = "expiration_date")
 	private Date expirationDate;
 
 	@NotNull
-	@Column(name = "CompanyName")
+	@Column(name = "company_name")
 	private String companyName;
 
 	@Nullable
-	@Column(name = "EmitionDate")
+	@Column(name = "emition_date")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date emitionDate;
 
 	@Nullable
-	@Column(name = "ActivationDate")
+	@Column(name = "activation_date")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date activationDate;
 
 	@NotNull
-	@Column(name = "Used")
+	@Column(name = "used")
 	private boolean used;
 
 	@ManyToOne
-	@JoinColumn(name = "Client_Id")
+	@JoinColumn(name = "client_id")
 	private Client client;
 
 	public Long getId() {

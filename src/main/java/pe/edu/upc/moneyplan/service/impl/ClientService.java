@@ -65,5 +65,4 @@ public class ClientService implements IClientService {
 		}
 		return clientFound;
 	}
-
 }

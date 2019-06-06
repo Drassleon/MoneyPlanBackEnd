@@ -1,5 +1,6 @@
 package pe.edu.upc.moneyplan.models.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,37 +14,37 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "SubscriptionPayment")
-public class SubscriptionPayment {
+@Table(name = "subscription_payment")
+public class SubscriptionPayment implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Id")
+	@Column(name = "id")
 	private Long id;
 
 	@NotNull
-	@Column(name = "BillingDate")
+	@Column(name = "billing_date")
 	private Date billingDate;
 
 	@NotNull
-	@Column(name = "Amount")
+	@Column(name = "amount")
 	private double amount;
 
 	@NotNull
-	@Column(name = "Description")
+	@Column(name = "description")
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "Client_Id")
+	@JoinColumn(name = "client_id")
 	private Client client;
 
 	@ManyToOne
-	@JoinColumn(name = "CustomCategory_Id")
+	@JoinColumn(name = "custom_category_id")
 	private CustomCategory customCategory;
 
 	@ManyToOne
-	@JoinColumn(name = "DefaultCategory_Id")
+	@JoinColumn(name = "default_category_id")
 	private DefaultCategory defaultCategory;
 
 	public Long getId() {

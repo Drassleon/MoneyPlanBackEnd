@@ -1,53 +1,54 @@
 package pe.edu.upc.moneyplan.models.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Client")
+@Table(name = "client")
 public class Client implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Id")
+	@Column(name = "id")
 	private Long id;
 
 	@NotNull
-	@Column(name = "Name")
+	@Column(name = "name")
 	private String name;
 
 	@NotNull
-	@Column(name = "PhoneNumber")
+	@Column(name = "phone_number")
 	private String phoneNumber;
 
 	@NotNull
-	@Column(name = "DocId")
+	@Column(name = "doc_id")
 	private String docId;
 
 	@NotNull
-	@Column(name = "DocIdType")
+	@Column(name = "doc_id_type")
 	private String docIdType;
 
 	@NotNull
-	@Column(name = "Email")
+	@Column(name = "email")
 	@Email
 	private String email;
-
+	
+	@ManyToOne
+	@JoinColumn(name = "user_sec_id")
+	private UserSec user;
+	
 	public Long getId() {
 		return id;
 	}
@@ -96,4 +97,11 @@ public class Client implements Serializable {
 		this.email = email;
 	}
 
+	public UserSec getUser() {
+		return user;
+	}
+
+	public void setUser(UserSec user) {
+		this.user = user;
+	}
 }

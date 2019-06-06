@@ -27,6 +27,7 @@ import pe.edu.upc.moneyplan.service.inter.ISubscriptionPaymentService;
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
 		RequestMethod.PUT })
 public class SubscriptionPaymentControllerApi {
+	@Autowired
 	ISubscriptionPaymentService subscriptionPaymentService = new SubscriptionPaymentService();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)

@@ -1,9 +1,7 @@
 package pe.edu.upc.moneyplan.models.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,47 +13,45 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 @Entity
-@Table(name = "Transaction")
+@Table(name = "transaction")
 public class Transaction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Id")
+	@Column(name = "id")
 	private Long id;
 
 	@NotNull
-	@Column(name = "TransactionType")
+	@Column(name = "transaction_type")
 	private int transactionType;
 
 	@NotNull
-	@Column(name = "Amount")
+	@Column(name = "amount")
 	private double amount;
 
 	@NotNull
-	@Column(name = "StartDate")
+	@Column(name = "start_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date timestamp;
 
 	@NotNull
-	@Column(name = "Description")
+	@Column(name = "description")
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "Client_Id")
+	@JoinColumn(name = "client_id")
 	private Client client;
 
 	@ManyToOne
-	@JoinColumn(name = "CustomCategory_Id")
+	@JoinColumn(name = "custom_category_id")
 	@Nullable
 	private CustomCategory customCategory;
 	@ManyToOne
-	@JoinColumn(name = "DefaultCategory_Id")
+	@JoinColumn(name = "default_category_id")
 	@Nullable
 	private DefaultCategory defaultCategory;
 
