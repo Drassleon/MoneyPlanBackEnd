@@ -34,4 +34,9 @@ public class SavingGoalService implements ISavingGoalService {
 		savingGoalRepo.deleteById(id);
 	}
 
+	@Override
+	public List<SavingGoal> findByClientId(Long id) {
+		return savingGoalRepo.findByClientId(id);
+	}
+
 }

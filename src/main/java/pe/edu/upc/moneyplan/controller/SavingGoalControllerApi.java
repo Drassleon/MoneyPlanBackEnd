@@ -18,12 +18,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import pe.edu.upc.moneyplan.models.entity.CustomCategory;
 import pe.edu.upc.moneyplan.models.entity.SavingGoal;
 import pe.edu.upc.moneyplan.service.impl.SavingGoalService;
 import pe.edu.upc.moneyplan.service.inter.ISavingGoalService;
 
 @RestController
-@RequestMapping("api/savingGoal")
+@RequestMapping("/api/savingGoal")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
 		RequestMethod.PUT })
 public class SavingGoalControllerApi {
@@ -42,6 +43,12 @@ public class SavingGoalControllerApi {
 	@ResponseBody
 	public SavingGoal findOne(@PathVariable("id") Long id) {
 		return savingGoalService.findById(id);
+	}
+	
+	@RequestMapping(value = "/client/{clientId}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<SavingGoal> findByClientId(@PathVariable("clientId") Long clientId) {
+		return savingGoalService.findByClientId(clientId);
 	}
 
 	@PostMapping("/")

@@ -23,7 +23,7 @@ import pe.edu.upc.moneyplan.service.impl.SubscriptionPaymentService;
 import pe.edu.upc.moneyplan.service.inter.ISubscriptionPaymentService;
 
 @RestController
-@RequestMapping("api/subscriptionPayment")
+@RequestMapping("/api/subscriptionPayment")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
 		RequestMethod.PUT })
 public class SubscriptionPaymentControllerApi {

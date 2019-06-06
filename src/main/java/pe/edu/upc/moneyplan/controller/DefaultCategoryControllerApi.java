@@ -23,7 +23,7 @@ import pe.edu.upc.moneyplan.service.impl.DefaultCategoryService;
 import pe.edu.upc.moneyplan.service.inter.IDefaultCategoryService;
 
 @RestController
-@RequestMapping("api/defaultCategory")
+@RequestMapping("/api/defaultCategory")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
 		RequestMethod.PUT })
 public class DefaultCategoryControllerApi {

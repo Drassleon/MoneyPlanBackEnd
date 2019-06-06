@@ -23,7 +23,7 @@ import pe.edu.upc.moneyplan.service.impl.RewardService;
 import pe.edu.upc.moneyplan.service.inter.IRewardService;
 
 @RestController
-@RequestMapping("api/reward")
+@RequestMapping("/api/reward")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
 		RequestMethod.PUT })
 public class RewardControllerApi {

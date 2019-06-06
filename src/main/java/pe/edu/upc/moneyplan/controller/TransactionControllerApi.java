@@ -23,7 +23,7 @@ import pe.edu.upc.moneyplan.service.impl.TransactionService;
 import pe.edu.upc.moneyplan.service.inter.ITransactionService;
 
 @RestController
-@RequestMapping("api/transaction")
+@RequestMapping("/api/transaction")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
 		RequestMethod.PUT })
 public class TransactionControllerApi {
