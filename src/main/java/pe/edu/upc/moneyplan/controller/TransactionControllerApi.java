@@ -24,8 +24,8 @@ import pe.edu.upc.moneyplan.service.inter.ITransactionService;
 
 @RestController
 @RequestMapping("/api/transaction")
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
-		RequestMethod.PUT })
+@CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
+		RequestMethod.PUT }, allowedHeaders = {"Content-Type", "Authorization"}, allowCredentials="true")
 public class TransactionControllerApi {
 	@Autowired
 	ITransactionService transactionService = new TransactionService();

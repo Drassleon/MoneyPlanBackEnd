@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,9 +43,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().anyRequest().authenticated().and().httpBasic().and()
-				.sessionManagement().disable();
+	protected void configure(final HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().authorizeRequests()
+		.anyRequest()
+		.authenticated()
+		.antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
+		.antMatchers(HttpMethod.GET,"/api/**").permitAll()
+		.antMatchers(HttpMethod.POST,"/api/**").permitAll()
+		.antMatchers(HttpMethod.PUT,"/api/**").permitAll()
+		.antMatchers(HttpMethod.DELETE,"/api/**").permitAll()
+		.and()
+		.httpBasic()
+		.and()
+		.sessionManagement().disable();
 	}
+	
+	
 
 }

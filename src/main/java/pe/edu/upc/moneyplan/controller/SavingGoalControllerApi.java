@@ -24,8 +24,8 @@ import pe.edu.upc.moneyplan.service.inter.ISavingGoalService;
 
 @RestController
 @RequestMapping("/api/savingGoal")
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
-		RequestMethod.PUT })
+@CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
+		RequestMethod.PUT }, allowedHeaders = {"Content-Type", "Authorization"}, allowCredentials="true")
 public class SavingGoalControllerApi {
 	@Autowired
 	ISavingGoalService savingGoalService = new SavingGoalService();
