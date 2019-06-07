@@ -82,7 +82,20 @@ public class ClientControllerApi {
 
 		return ResponseEntity.created(location).build();
 	}
-
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@ResponseBody
+	public HttpStatus login(@RequestBody UserSec user) {
+		UserSec userFound = securityService.findByUserName(user.getUsername());
+		if(userFound==null)
+		{
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+		}
+		if(bCryptPasswordEncoder.matches(user.getPassword(), userFound.getPassword()))
+		{
+			return HttpStatus.OK;
+		}
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Password doesn't match");
+	}
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> update(@RequestBody Client client, @PathVariable long id) {
 
