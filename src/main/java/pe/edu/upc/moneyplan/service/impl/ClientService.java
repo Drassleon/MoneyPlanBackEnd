@@ -65,4 +65,10 @@ public class ClientService implements IClientService {
 		}
 		return clientFound;
 	}
+
+	@Override
+	public Client findByUserId(Long id) {
+		// TODO Auto-generated method stub
+		return clientRepository.findByUserId(id);
+	}
 }

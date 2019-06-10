@@ -31,7 +31,7 @@ import pe.edu.upc.utils.UserDTO;
 @RestController
 @RequestMapping("/api/client")
 @CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
-		RequestMethod.PUT }, allowedHeaders = {"Content-Type", "Authorization"}, allowCredentials="true")
+		RequestMethod.PUT }, allowedHeaders = { "Content-Type", "Authorization" }, allowCredentials = "true")
 public class ClientControllerApi {
 	@Autowired
 	IClientService clientService = new ClientService();
@@ -54,6 +54,14 @@ public class ClientControllerApi {
 		return clientService.findById(id);
 	}
 
+	@RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
+	@ResponseBody
+	public Long findClientByUsername(@PathVariable("username") String username) {
+		UserSec userFound = securityService.findByUserName(username);
+		Client clientFound = clientService.findByUserId(userFound.getId());
+		return clientFound.getId();
+	}
+
 	@PostMapping("/")
 	public ResponseEntity<Object> create(@RequestBody UserDTO user) {
 
@@ -64,8 +72,8 @@ public class ClientControllerApi {
 		if (clientDuplicate) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists!");
 		}
-		if(securityService.findByUserName(userSec.getUsername())!=null) {
-			throw new ResponseStatusException(HttpStatus.CONFLICT,"Username already exists!");
+		if (securityService.findByUserName(userSec.getUsername()) != null) {
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists!");
 		}
 		String encodedPassword = bCryptPasswordEncoder.encode(userSec.getPassword());
 		userSec.setPassword(encodedPassword);
@@ -75,27 +83,27 @@ public class ClientControllerApi {
 			userSec = securityService.findByUserName(user.getUser().getUsername());
 			client.setUser(userSec);
 			clientService.save(client);
-		}	
+		}
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(client.getId())
 				.toUri();
 
 		return ResponseEntity.created(location).build();
 	}
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public HttpStatus login(@RequestBody UserSec user) {
 		UserSec userFound = securityService.findByUserName(user.getUsername());
-		if(userFound==null)
-		{
+		if (userFound == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
-		if(bCryptPasswordEncoder.matches(user.getPassword(), userFound.getPassword()))
-		{
+		if (bCryptPasswordEncoder.matches(user.getPassword(), userFound.getPassword())) {
 			return HttpStatus.OK;
 		}
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Password doesn't match");
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Password doesn't match");
 	}
+
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> update(@RequestBody Client client, @PathVariable long id) {
 
