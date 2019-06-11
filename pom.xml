@@ -20,23 +20,30 @@
 		<java.version>1.8</java.version>
 		<spring-security.version>5.0.12.RELEASE</spring-security.version>
 	</properties>
-
+	<!--<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-gcp-dependencies</artifactId>
+				<version>1.0.0.RC1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>-->
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>${spring-security.version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>${spring-security.version}</version><!--$NO-MVN-MAN-VER$-->
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>${spring-security.version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -46,17 +53,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		
-		<dependency>
-   			<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-config</artifactId>
-		</dependency>
-
+		<!--  <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-gcp-starter-sql-postgresql</artifactId>
+		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -70,7 +70,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.46</version><!--$NO-MVN-MAN-VER$-->
+			<version>5.1.46</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -93,7 +93,13 @@
 			<version>2.9.2</version>
 		</dependency>
 	</dependencies>
-
+	<!--  <repositories>
+		<repository>
+			<id>repository.spring.milestone</id>
+			<name>Spring Milestones Repository</name>
+			<url>http://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>-->
 	<build>
 		<plugins>
 			<plugin>
