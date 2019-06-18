@@ -1,6 +1,7 @@
 package pe.edu.upc.moneyplan.controller;
 
 import java.net.URI;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,10 +55,12 @@ public class ClientControllerApi {
 		return clientService.findById(id);
 	}
 
-	@RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/", method = RequestMethod.POST)
 	@ResponseBody
-	public Long findClientByUsername(@PathVariable("username") String username) {
-		UserSec userFound = securityService.findByUserName(username);
+	public Long findClientByUsername(String username) {
+		byte[] decodedBytes = Base64.getDecoder().decode(username);
+		String decodedString = new String(decodedBytes);
+		UserSec userFound = securityService.findByUserName(decodedString);
 		Client clientFound = clientService.findByUserId(userFound.getId());
 		return clientFound.getId();
 	}

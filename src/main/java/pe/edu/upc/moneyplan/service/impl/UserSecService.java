@@ -42,13 +42,18 @@ public class UserSecService implements IUserSecService {
 
 	@Override
 	public UserSec findByUserName(String username) {
-		return userSecRepository.findByUserName(username);
+		List<UserSec> aux = userSecRepository.findByUserName(username);
+		if(aux.size()==0)
+		{
+			return null;
+		}
+		return aux.get(0);
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		UserSec user = userSecRepository.findByUserName(username);
+		UserSec user = userSecRepository.findByUserName(username).get(0);
 
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found");
