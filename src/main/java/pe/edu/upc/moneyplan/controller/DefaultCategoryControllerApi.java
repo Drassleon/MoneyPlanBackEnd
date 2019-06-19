@@ -24,8 +24,10 @@ import pe.edu.upc.moneyplan.service.inter.IDefaultCategoryService;
 
 @RestController
 @RequestMapping("/api/defaultCategory")
-@CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
-		RequestMethod.PUT }, allowedHeaders = {"Content-Type", "Authorization"}, allowCredentials="true")
+@CrossOrigin(origins = "http://localhost:4200", 
+methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.OPTIONS }, 
+allowedHeaders = { "Content-Type", "Authorization", "Access-Control-Allow-Headers", "X-Requested-With","Access-Control-Max-Age", "Access-Control-Allow-Methods", "Access-Control-Allow-Origin" }, 
+allowCredentials = "true")
 public class DefaultCategoryControllerApi {
 	@Autowired
 	IDefaultCategoryService defaultCategoryService = new DefaultCategoryService();

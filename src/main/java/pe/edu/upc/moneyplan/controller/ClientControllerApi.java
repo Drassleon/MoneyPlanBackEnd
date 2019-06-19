@@ -31,8 +31,10 @@ import pe.edu.upc.utils.UserDTO;
 
 @RestController
 @RequestMapping("/api/client")
-@CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
-		RequestMethod.PUT }, allowedHeaders = { "Content-Type", "Authorization" }, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:4200", 
+		methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.OPTIONS }, 
+		allowedHeaders = { "Content-Type", "Authorization", "Access-Control-Allow-Headers", "X-Requested-With","Access-Control-Max-Age", "Access-Control-Allow-Methods", "Access-Control-Allow-Origin" }, 
+		allowCredentials = "true")
 public class ClientControllerApi {
 	@Autowired
 	IClientService clientService = new ClientService();
@@ -95,6 +97,9 @@ public class ClientControllerApi {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public HttpStatus login(@RequestBody UserSec user) {
+		System.out.println("Entró");
+		System.out.println(user.getUsername());
+		System.out.println(user.getPassword());
 		UserSec userFound = securityService.findByUserName(user.getUsername());
 		byte[] decodedBytes = Base64.getDecoder().decode(user.getPassword());
 		String decodedString = new String(decodedBytes);
