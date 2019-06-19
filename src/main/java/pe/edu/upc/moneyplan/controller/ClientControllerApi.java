@@ -96,6 +96,9 @@ public class ClientControllerApi {
 	@ResponseBody
 	public HttpStatus login(String username,String password) {
 		UserSec userFound = securityService.findByUserName(username);
+		byte[] decodedBytes = Base64.getDecoder().decode(password);
+		String decodedString = new String(decodedBytes);
+		password = decodedString;
 		if (userFound == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
