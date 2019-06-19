@@ -58,9 +58,7 @@ public class ClientControllerApi {
 	@RequestMapping(value = "/user/", method = RequestMethod.POST)
 	@ResponseBody
 	public Long findClientByUsername(String username) {
-		byte[] decodedBytes = Base64.getDecoder().decode(username);
-		String decodedString = new String(decodedBytes);
-		UserSec userFound = securityService.findByUserName(decodedString);
+		UserSec userFound = securityService.findByUserName(username);
 		Client clientFound = clientService.findByUserId(userFound.getId());
 		return clientFound.getId();
 	}
@@ -96,12 +94,12 @@ public class ClientControllerApi {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public HttpStatus login(@RequestBody UserSec user) {
-		UserSec userFound = securityService.findByUserName(user.getUsername());
+	public HttpStatus login(String username,String password) {
+		UserSec userFound = securityService.findByUserName(username);
 		if (userFound == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
-		if (bCryptPasswordEncoder.matches(user.getPassword(), userFound.getPassword())) {
+		if (bCryptPasswordEncoder.matches(password, userFound.getPassword())) {
 			return HttpStatus.OK;
 		}
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Password doesn't match");

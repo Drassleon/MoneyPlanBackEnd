@@ -1,6 +1,7 @@
 package pe.edu.upc.moneyplan.service.impl;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,9 @@ public class UserSecService implements IUserSecService {
 
 	@Override
 	public UserSec findByUserName(String username) {
-		List<UserSec> aux = userSecRepository.findByUserName(username);
+		byte[] decodedBytes = Base64.getDecoder().decode(username);
+		String decodedString = new String(decodedBytes);
+		List<UserSec> aux = userSecRepository.findByUserName(decodedString);
 		if(aux.size()==0)
 		{
 			return null;
