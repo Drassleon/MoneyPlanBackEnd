@@ -43,6 +43,9 @@ public class ClientControllerApi {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    Base64.Encoder encoder = Base64.getEncoder();  
+
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Client> findAll() {
@@ -70,12 +73,13 @@ public class ClientControllerApi {
 
 		Client client = user.getClient();
 		UserSec userSec = user.getUser();
+		String encodedUsername = encoder.encodeToString(userSec.getUsername().getBytes());
 
 		Boolean clientDuplicate = clientService.validateDuplicate(client.getEmail());
 		if (clientDuplicate) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists!");
 		}
-		if (securityService.findByUserName(userSec.getUsername()) != null) {
+		if (securityService.findByUserName(encodedUsername) != null) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists!");
 		}
 		String encodedPassword = bCryptPasswordEncoder.encode(userSec.getPassword());
@@ -83,7 +87,7 @@ public class ClientControllerApi {
 		try {
 			securityService.save(userSec);
 		} finally {
-			userSec = securityService.findByUserName(user.getUser().getUsername());
+			userSec.setId(securityService.findByUserName(encodedUsername).getId());
 			client.setUser(userSec);
 			clientService.save(client);
 		}
