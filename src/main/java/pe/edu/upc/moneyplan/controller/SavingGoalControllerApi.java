@@ -24,7 +24,7 @@ import pe.edu.upc.moneyplan.service.inter.ISavingGoalService;
 
 @RestController
 @RequestMapping("/api/savingGoal")
-@CrossOrigin(origins = "http://localhost:4200", 
+@CrossOrigin(
 methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.OPTIONS }, 
 allowedHeaders = { "Content-Type", "Authorization", "Access-Control-Allow-Headers", "X-Requested-With","Access-Control-Max-Age", "Access-Control-Allow-Methods", "Access-Control-Allow-Origin" }, 
 allowCredentials = "true")

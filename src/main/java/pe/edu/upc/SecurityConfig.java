@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 	
+	/*
 	@Bean
     CorsConfigurationSource corsConfigurationSource()
     {
@@ -61,10 +62,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+    */
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests()
+		http
+		.cors().and()
+		.csrf().disable().authorizeRequests()
 		.anyRequest()
 		.authenticated()
 		.antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
