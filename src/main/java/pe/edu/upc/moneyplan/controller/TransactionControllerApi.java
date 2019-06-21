@@ -1,6 +1,5 @@
 package pe.edu.upc.moneyplan.controller;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +15,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.server.ResponseStatusException;
 
+import pe.edu.upc.moneyplan.models.entity.Client;
+import pe.edu.upc.moneyplan.models.entity.CustomCategory;
+import pe.edu.upc.moneyplan.models.entity.DefaultCategory;
 import pe.edu.upc.moneyplan.models.entity.Transaction;
+import pe.edu.upc.moneyplan.service.impl.ClientService;
+import pe.edu.upc.moneyplan.service.impl.CustomCategoryService;
+import pe.edu.upc.moneyplan.service.impl.DefaultCategoryService;
 import pe.edu.upc.moneyplan.service.impl.TransactionService;
+import pe.edu.upc.moneyplan.service.inter.IClientService;
+import pe.edu.upc.moneyplan.service.inter.ICustomCategoryService;
+import pe.edu.upc.moneyplan.service.inter.IDefaultCategoryService;
 import pe.edu.upc.moneyplan.service.inter.ITransactionService;
+import pe.edu.upc.utils.TransactionDTO;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -31,7 +40,13 @@ allowCredentials = "true")
 public class TransactionControllerApi {
 	@Autowired
 	ITransactionService transactionService = new TransactionService();
-
+	@Autowired
+	IDefaultCategoryService defaultCategoryService = new DefaultCategoryService();
+	@Autowired
+	ICustomCategoryService customCategoryService = new CustomCategoryService();
+	@Autowired
+	IClientService clientService = new ClientService();
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Transaction> findAll() {
@@ -65,15 +80,42 @@ public class TransactionControllerApi {
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<Object> create(@RequestBody Transaction transaction) {
+	public HttpStatus create(@RequestBody TransactionDTO transaction) {
+		Client client = clientService.findById(transaction.getClientId());
+		if(client==null)
+		{
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Client not found"); 
+		}
+		Transaction t = new Transaction();
+		t.setAmount(transaction.getAmount());
+		t.setClient(client);
+		t.setDescription(transaction.getDescription());
+		t.setTimestamp(transaction.getTimestamp());
+		t.setTransactionType(transaction.getTransactionType());
+		DefaultCategory defaultCategory = defaultCategoryService.findByName(transaction.getCategoryName());
+		if(defaultCategory!=null)
+		{
+			t.setDefaultCategory(defaultCategory);
+		}
+		else {
+			CustomCategory customCategory = customCategoryService.findByName(transaction.getCategoryName(), client.getId());
+			if(customCategory!=null)
+			{
+				t.setCustomCategory(customCategory);
+			}
+			else
+			{
+				customCategory = new CustomCategory();
+				customCategory.setClient(client);
+				customCategory.setName(transaction.getCategoryName());
+				customCategory.setDescription("");
+				customCategoryService.save(customCategory);
+				t.setCustomCategory(customCategory);
+			}
+		}
+		transactionService.save(t);
 
-		transactionService.save(transaction);
-
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(transaction.getId()).toUri();
-
-		return ResponseEntity.created(location).build();
-
+		return HttpStatus.OK;
 	}
 
 	@PutMapping("/{id}")

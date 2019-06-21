@@ -34,4 +34,9 @@ public class DefaultCategoryService implements IDefaultCategoryService {
 		defaultCategoryRepo.deleteById(id);
 	}
 
+	@Override
+	public DefaultCategory findByName(String name) {
+		return defaultCategoryRepo.findByName(name);
+	}
+
 }
