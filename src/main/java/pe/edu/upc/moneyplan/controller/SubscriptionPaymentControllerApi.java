@@ -100,7 +100,17 @@ public class SubscriptionPaymentControllerApi {
 
 		return HttpStatus.OK;
 	}
-
+	@RequestMapping(value = "/client/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<SubscriptionPayment> findByClientId(@PathVariable("id") Long id) {
+		List<SubscriptionPayment> subscriptions = subscriptionPaymentService.findByClientId(id);
+		if(subscriptions.isEmpty())
+		{
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Client has no subscriptions");
+		}
+		return subscriptions;
+	}
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> update(@RequestBody SubscriptionPayment subscriptionPayment, @PathVariable long id) {
 

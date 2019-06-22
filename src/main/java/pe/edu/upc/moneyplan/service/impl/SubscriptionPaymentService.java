@@ -38,4 +38,10 @@ public class SubscriptionPaymentService implements ISubscriptionPaymentService {
 		subscriptionRepository.deleteById(id);
 	}
 
+	@Override
+	public List<SubscriptionPayment> findByClientId(Long clientId) {
+		// TODO Auto-generated method stub
+		return subscriptionRepository.findByClientId(clientId);
+	}
+
 }

@@ -1,11 +1,15 @@
 package pe.edu.upc.moneyplan.models.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import pe.edu.upc.moneyplan.models.entity.SubscriptionPayment;
 
 @Repository
 public interface ISubscriptionPaymentDAO extends JpaRepository<SubscriptionPayment, Long> {
-
+@Query(value = "SELECT * FROM subscription_payment s WHERE s.client_id=?1",nativeQuery=true)
+List<SubscriptionPayment> findByClientId(Long clientId);
 }
