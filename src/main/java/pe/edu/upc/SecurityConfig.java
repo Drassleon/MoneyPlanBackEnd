@@ -1,5 +1,7 @@
 package pe.edu.upc;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -47,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 	
-	/*
+	
 	@Bean
     CorsConfigurationSource corsConfigurationSource()
     {
@@ -60,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-    */
+    
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
@@ -69,7 +71,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf().disable().authorizeRequests()
 		.anyRequest()
 		.authenticated()
-		.antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/**").permitAll()
 		.antMatchers(HttpMethod.POST,"/api/**").permitAll()
 		.antMatchers(HttpMethod.PUT,"/api/**").permitAll()

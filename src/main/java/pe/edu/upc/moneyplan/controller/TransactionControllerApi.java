@@ -1,5 +1,6 @@
 package pe.edu.upc.moneyplan.controller;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class TransactionControllerApi {
 		return transactionService.findByClientId(clientId);
 	}
 
-	@RequestMapping(value = "/resumen/gasto/promedio/{clientId}/{month}")
+	@RequestMapping(value = "/resumen/gasto/promedio/{clientId}/{month}", method = RequestMethod.GET)
 	@ResponseBody
 	public double ExpenseAverage(@PathVariable("clientId") Long clientId, @PathVariable("month") int month) {
 		double averageSpent = 0.00f;
@@ -77,6 +78,34 @@ public class TransactionControllerApi {
 				averageSpent += expense.getAmount();
 		}
 		return averageSpent / expenses.size();
+	}
+	
+	@RequestMapping(value = "/expenses/{clientId}/{year}/{month}", method = RequestMethod.GET)
+	@ResponseBody
+	public double ExpenseFromMonth(@PathVariable("clientId") Long clientId, @PathVariable("year") int year, @PathVariable("month") int month) {
+		double totalExpensesFromMonth = 0.00f;
+		List<Transaction> expenses = transactionService.findByClientId(clientId);
+		for (Transaction expense : expenses) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(expense.getTimestamp());
+			if (expense.getTransactionType() == 2 && calendar.get(Calendar.YEAR) == year && calendar.get(Calendar.MONTH) == month)
+				totalExpensesFromMonth += expense.getAmount();
+		}
+		return totalExpensesFromMonth;
+	}
+	
+	@RequestMapping(value = "/incomes/{clientId}/{year}/{month}", method = RequestMethod.GET)
+	@ResponseBody
+	public double IncomeFromMonth(@PathVariable("clientId") Long clientId, @PathVariable("year") int year, @PathVariable("month") int month) {
+		double totalIncomesFromMonth = 0.00f;
+		List<Transaction> incomes = transactionService.findByClientId(clientId);
+		for (Transaction income : incomes) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(income.getTimestamp());
+			if (income.getTransactionType() == 1 && calendar.get(Calendar.YEAR) == year && calendar.get(Calendar.MONTH) == month )
+				totalIncomesFromMonth += income.getAmount();
+		}
+		return totalIncomesFromMonth;
 	}
 
 	@PostMapping("/")
