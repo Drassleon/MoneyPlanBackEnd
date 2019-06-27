@@ -1,5 +1,6 @@
 package pe.edu.upc.moneyplan.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import pe.edu.upc.moneyplan.service.inter.IClientService;
 import pe.edu.upc.moneyplan.service.inter.ICustomCategoryService;
 import pe.edu.upc.moneyplan.service.inter.IDefaultCategoryService;
 import pe.edu.upc.moneyplan.service.inter.ITransactionService;
+import pe.edu.upc.utils.SummaryDTO;
 import pe.edu.upc.utils.TransactionDTO;
 
 @RestController
@@ -67,14 +69,90 @@ public class TransactionControllerApi {
 	public List<Transaction> findByClientId(@PathVariable("clientId") Long clientId) {
 		return transactionService.findByClientId(clientId);
 	}
-
-	@RequestMapping(value = "/resumen/gasto/promedio/{clientId}/{month}", method = RequestMethod.GET)
+	
+	@RequestMapping(value= "/resumen/gasto/categoria/{clientId}/{year}/{month}/")
 	@ResponseBody
-	public double ExpenseAverage(@PathVariable("clientId") Long clientId, @PathVariable("month") int month) {
+	public List<SummaryDTO> ExpenseByCategory(@PathVariable("clientId")Long clientId,@PathVariable("year")int year,@PathVariable("month")int month){
+		SummaryDTO summary = new SummaryDTO();
+		List<SummaryDTO> result = new ArrayList<SummaryDTO>();
+		
+		List<DefaultCategory> defaultCategories = defaultCategoryService.findAll();
+		List<CustomCategory> customCategories = customCategoryService.findByClientId(clientId);
+		for (CustomCategory customCategory : customCategories) {
+			summary.setCategoryName(customCategory.getName());
+			result.add(summary);
+		}
+		for (DefaultCategory defaultCategory : defaultCategories) {
+			summary.setCategoryName(defaultCategory.getName());
+			result.add(summary);
+		}
+		List<Transaction> expenses = transactionService.findByClientId(clientId);
+		Calendar calendar = Calendar.getInstance();
+		for (Transaction expense : expenses) {
+			calendar.setTime(expense.getTimestamp());
+			if ((expense.getTransactionType() == 2 ||expense.getTransactionType()==3) && (calendar.get(Calendar.YEAR)==year && calendar.get(Calendar.MONTH)== month))
+			{
+				for (SummaryDTO resultObject : result) {
+					if(expense.getCustomCategory()==null && expense.getDefaultCategory().getName()==resultObject.getCategoryName())
+					{
+						resultObject.setAmount(resultObject.getAmount()+expense.getAmount());
+					}
+					if(expense.getDefaultCategory()==null && expense.getCustomCategory().getName()==resultObject.getCategoryName())
+					{
+						resultObject.setAmount(resultObject.getAmount()+expense.getAmount());
+					}
+				}
+			}		
+		}
+		return result;
+	}
+	
+	@RequestMapping(value= "/resumen/ingreso/categoria/{clientId}/{year}/{month}/")
+	@ResponseBody
+	public List<SummaryDTO> IncomeByCategory(@PathVariable("clientId")Long clientId,@PathVariable("year")int year,@PathVariable("month")int month){
+		SummaryDTO summary = new SummaryDTO();
+		List<SummaryDTO> result = new ArrayList<SummaryDTO>();
+		
+		List<DefaultCategory> defaultCategories = defaultCategoryService.findAll();
+		List<CustomCategory> customCategories = customCategoryService.findByClientId(clientId);
+		for (CustomCategory customCategory : customCategories) {
+			summary.setCategoryName(customCategory.getName());
+			result.add(summary);
+		}
+		for (DefaultCategory defaultCategory : defaultCategories) {
+			summary.setCategoryName(defaultCategory.getName());
+			result.add(summary);
+		}
+		List<Transaction> incomes = transactionService.findByClientId(clientId);
+		Calendar calendar = Calendar.getInstance();
+		for (Transaction income : incomes) {
+			calendar.setTime(income.getTimestamp());
+			if (income.getTransactionType() == 1 && (calendar.get(Calendar.YEAR)==year && calendar.get(Calendar.MONTH)== month))
+			{
+				for (SummaryDTO resultObject : result) {
+					if(income.getCustomCategory()==null && income.getDefaultCategory().getName()==resultObject.getCategoryName())
+					{
+						resultObject.setAmount(resultObject.getAmount()+income.getAmount());
+					}
+					if(income.getDefaultCategory()==null && income.getCustomCategory().getName()==resultObject.getCategoryName())
+					{
+						resultObject.setAmount(resultObject.getAmount()+income.getAmount());
+					}
+				}
+			}		
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/resumen/gasto/promedio/{clientId}/{year}/{month}", method = RequestMethod.GET)
+	@ResponseBody
+	public double ExpenseAverage(@PathVariable("clientId") Long clientId,@PathVariable("year") int year ,@PathVariable("month") int month) {
 		double averageSpent = 0.00f;
 		List<Transaction> expenses = transactionService.findByClientId(clientId);
+		Calendar calendar = Calendar.getInstance();
 		for (Transaction expense : expenses) {
-			if (expense.getTransactionType() == 1)
+			calendar.setTime(expense.getTimestamp());
+			if (expense.getTransactionType() == 1 && (calendar.get(Calendar.YEAR)==year && calendar.get(Calendar.MONTH)== month))
 				averageSpent += expense.getAmount();
 		}
 		return averageSpent / expenses.size();
@@ -82,7 +160,7 @@ public class TransactionControllerApi {
 	
 	@RequestMapping(value = "/expenses/{clientId}/{year}/{month}", method = RequestMethod.GET)
 	@ResponseBody
-	public double ExpenseFromMonth(@PathVariable("clientId") Long clientId, @PathVariable("year") int year, @PathVariable("month") int month) {
+	public double ExpensePerMonth(@PathVariable("clientId") Long clientId, @PathVariable("year") int year, @PathVariable("month") int month) {
 		double totalExpensesFromMonth = 0.00f;
 		List<Transaction> expenses = transactionService.findByClientId(clientId);
 		for (Transaction expense : expenses) {
@@ -96,7 +174,7 @@ public class TransactionControllerApi {
 	
 	@RequestMapping(value = "/incomes/{clientId}/{year}/{month}", method = RequestMethod.GET)
 	@ResponseBody
-	public double IncomeFromMonth(@PathVariable("clientId") Long clientId, @PathVariable("year") int year, @PathVariable("month") int month) {
+	public double IncomePerMonth(@PathVariable("clientId") Long clientId, @PathVariable("year") int year, @PathVariable("month") int month) {
 		double totalIncomesFromMonth = 0.00f;
 		List<Transaction> incomes = transactionService.findByClientId(clientId);
 		for (Transaction income : incomes) {
