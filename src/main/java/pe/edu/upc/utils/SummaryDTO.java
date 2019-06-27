@@ -11,6 +11,10 @@ public class SummaryDTO implements Serializable{
 	
 	private String categoryName;
 	private Double amount;
+	public void addAmount(double amount)
+	{
+		this.amount+=amount;
+	}
 	public String getCategoryName() {
 		return categoryName;
 	}

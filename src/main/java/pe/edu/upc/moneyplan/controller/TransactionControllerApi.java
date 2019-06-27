@@ -70,76 +70,89 @@ public class TransactionControllerApi {
 		return transactionService.findByClientId(clientId);
 	}
 	
-	@RequestMapping(value= "/resumen/gasto/categoria/{clientId}/{year}/{month}/")
+	@RequestMapping(value= "/resumen/gasto/categoria/{clientId}/{year}/{month}/",method = RequestMethod.GET)
 	@ResponseBody
 	public List<SummaryDTO> ExpenseByCategory(@PathVariable("clientId")Long clientId,@PathVariable("year")int year,@PathVariable("month")int month){
-		SummaryDTO summary = new SummaryDTO();
 		List<SummaryDTO> result = new ArrayList<SummaryDTO>();
 		
 		List<DefaultCategory> defaultCategories = defaultCategoryService.findAll();
 		List<CustomCategory> customCategories = customCategoryService.findByClientId(clientId);
 		for (CustomCategory customCategory : customCategories) {
+			SummaryDTO summary = new SummaryDTO();
 			summary.setCategoryName(customCategory.getName());
+			summary.setAmount(0.0);
 			result.add(summary);
 		}
 		for (DefaultCategory defaultCategory : defaultCategories) {
+			SummaryDTO summary = new SummaryDTO();
 			summary.setCategoryName(defaultCategory.getName());
+			summary.setAmount(0.0);
 			result.add(summary);
 		}
 		List<Transaction> expenses = transactionService.findByClientId(clientId);
 		Calendar calendar = Calendar.getInstance();
 		for (Transaction expense : expenses) {
 			calendar.setTime(expense.getTimestamp());
-			if ((expense.getTransactionType() == 2 ||expense.getTransactionType()==3) && (calendar.get(Calendar.YEAR)==year && calendar.get(Calendar.MONTH)== month))
+			String categoryname;
+			if(expense.getCustomCategory()==null)
 			{
-				for (SummaryDTO resultObject : result) {
-					if(expense.getCustomCategory()==null && expense.getDefaultCategory().getName()==resultObject.getCategoryName())
-					{
-						resultObject.setAmount(resultObject.getAmount()+expense.getAmount());
-					}
-					if(expense.getDefaultCategory()==null && expense.getCustomCategory().getName()==resultObject.getCategoryName())
-					{
-						resultObject.setAmount(resultObject.getAmount()+expense.getAmount());
-					}
+				categoryname = expense.getDefaultCategory().getName();
+			}
+			else
+			{
+				categoryname = expense.getCustomCategory().getName();
+			}
+			for(SummaryDTO summaryDTO: result)
+			{
+				if(summaryDTO.getCategoryName().equals(categoryname) && (expense.getTransactionType()==2 || expense.getTransactionType()==3) &&calendar.get(Calendar.MONTH)==month&& calendar.get(Calendar.YEAR)==year)
+				{
+
+					summaryDTO.addAmount(expense.getAmount());
 				}
-			}		
+			}
 		}
 		return result;
 	}
 	
-	@RequestMapping(value= "/resumen/ingreso/categoria/{clientId}/{year}/{month}/")
+	@RequestMapping(value= "/resumen/ingreso/categoria/{clientId}/{year}/{month}/",method = RequestMethod.GET)
 	@ResponseBody
 	public List<SummaryDTO> IncomeByCategory(@PathVariable("clientId")Long clientId,@PathVariable("year")int year,@PathVariable("month")int month){
-		SummaryDTO summary = new SummaryDTO();
 		List<SummaryDTO> result = new ArrayList<SummaryDTO>();
 		
 		List<DefaultCategory> defaultCategories = defaultCategoryService.findAll();
 		List<CustomCategory> customCategories = customCategoryService.findByClientId(clientId);
 		for (CustomCategory customCategory : customCategories) {
+			SummaryDTO summary = new SummaryDTO();
 			summary.setCategoryName(customCategory.getName());
+			summary.setAmount(0.0);
 			result.add(summary);
 		}
 		for (DefaultCategory defaultCategory : defaultCategories) {
+			SummaryDTO summary = new SummaryDTO();
 			summary.setCategoryName(defaultCategory.getName());
+			summary.setAmount(0.0);
 			result.add(summary);
 		}
 		List<Transaction> incomes = transactionService.findByClientId(clientId);
 		Calendar calendar = Calendar.getInstance();
 		for (Transaction income : incomes) {
 			calendar.setTime(income.getTimestamp());
-			if (income.getTransactionType() == 1 && (calendar.get(Calendar.YEAR)==year && calendar.get(Calendar.MONTH)== month))
+			String categoryname;
+			if(income.getCustomCategory()==null)
 			{
-				for (SummaryDTO resultObject : result) {
-					if(income.getCustomCategory()==null && income.getDefaultCategory().getName()==resultObject.getCategoryName())
-					{
-						resultObject.setAmount(resultObject.getAmount()+income.getAmount());
-					}
-					if(income.getDefaultCategory()==null && income.getCustomCategory().getName()==resultObject.getCategoryName())
-					{
-						resultObject.setAmount(resultObject.getAmount()+income.getAmount());
-					}
+				categoryname = income.getDefaultCategory().getName();
+			}
+			else
+			{
+				categoryname = income.getCustomCategory().getName();
+			}
+			for(SummaryDTO summaryDTO: result)
+			{
+				if(summaryDTO.getCategoryName().equals(categoryname) && income.getTransactionType()==1 &&calendar.get(Calendar.MONTH)==month&& calendar.get(Calendar.YEAR)==year)
+				{
+					summaryDTO.addAmount(income.getAmount());
 				}
-			}		
+			}
 		}
 		return result;
 	}
