@@ -57,8 +57,24 @@ public class SubscriptionPaymentControllerApi {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public SubscriptionPayment findOne(@PathVariable("id") Long id) {
-		return subscriptionPaymentService.findById(id);
+	public SubscriptionPaymentDTO findOne(@PathVariable("id") Long id) {
+		SubscriptionPayment rawSubscription = subscriptionPaymentService.findById(id);
+		SubscriptionPaymentDTO subscription = new SubscriptionPaymentDTO();
+		subscription.setAmount(rawSubscription.getAmount());
+		
+		if(rawSubscription.getCustomCategory()==null)
+		{
+			subscription.setCategoryName(rawSubscription.getDefaultCategory().getName());
+		}
+		else
+		{
+			subscription.setCategoryName(rawSubscription.getCustomCategory().getName());
+		}
+		
+		subscription.setClientId(rawSubscription.getClient().getId());
+		subscription.setDescription(rawSubscription.getDescription());
+		subscription.setBillingDate(rawSubscription.getBillingDate());
+		return subscription;
 	}
 
 	@PostMapping("/")
@@ -112,16 +128,44 @@ public class SubscriptionPaymentControllerApi {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> update(@RequestBody SubscriptionPayment subscriptionPayment, @PathVariable long id) {
+	public HttpStatus update(@RequestBody SubscriptionPaymentDTO subscriptionPayment, @PathVariable long id) {
 
-		SubscriptionPayment subscriptionPaymentAux = subscriptionPaymentService.findById(id);
-		if (subscriptionPaymentAux != null) {
-			subscriptionPayment.setId(id);
-			subscriptionPaymentService.save(subscriptionPayment);
-			return ResponseEntity.noContent().build();
-
+		Client client = clientService.findById(subscriptionPayment.getClientId());		
+		if(client==null)
+		{
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Client not found"); 
 		}
-		return ResponseEntity.notFound().build();
+		SubscriptionPayment s = subscriptionPaymentService.findById(id);
+
+		s.setAmount(subscriptionPayment.getAmount());
+		s.setBillingDate(subscriptionPayment.getBillingDate());
+		s.setClient(client);
+		s.setDescription(subscriptionPayment.getDescription());
+		
+		DefaultCategory defaultCategory = defaultCategoryService.findByName(subscriptionPayment.getCategoryName());
+		if(defaultCategory!=null)
+		{
+			s.setDefaultCategory(defaultCategory);
+		}
+		else {
+			CustomCategory customCategory = customCategoryService.findByName(subscriptionPayment.getCategoryName(), client.getId());
+			if(customCategory!=null)
+			{
+				s.setCustomCategory(customCategory);
+			}
+			else
+			{
+				customCategory = new CustomCategory();
+				customCategory.setClient(client);
+				customCategory.setName(subscriptionPayment.getCategoryName());
+				customCategory.setDescription("");
+				customCategoryService.save(customCategory);
+				s.setCustomCategory(customCategory);
+			}
+		}
+		subscriptionPaymentService.save(s);
+
+		return HttpStatus.OK;
 
 	}
 
