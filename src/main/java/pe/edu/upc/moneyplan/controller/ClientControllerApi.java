@@ -5,6 +5,7 @@ import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,9 +61,9 @@ public class ClientControllerApi {
 		return clientService.findById(id);
 	}
 
-	@RequestMapping(value = "/user/", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
 	@ResponseBody
-	public Long findClientByUsername(String username) {
+	public Long findClientByUsername(@PathVariable("username")String username) {
 		UserSec userFound = securityService.findByUserName(username);
 		Client clientFound = clientService.findByUserId(userFound.getId());
 		return clientFound.getId();

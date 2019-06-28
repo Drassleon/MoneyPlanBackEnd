@@ -213,6 +213,7 @@ public class TransactionControllerApi {
 				}
 			}
 		}
+		
 		return result;
 	}
 
